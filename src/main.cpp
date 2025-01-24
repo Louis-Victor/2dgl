@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <cmath>
+#include <math.h>
 #include <cstdlib>
 #include <ctime>
 #include "stb_image.h"
@@ -66,14 +67,12 @@ int main(int argc, char** argv){
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
     LineVec lines;
-    for(int i=0;i<2;i++){
-        Line aline(Point(glm::vec2(0.0f,0.0f)),Point(glm::vec2((float)(10-i),0.0f)));
+    for(float i=0;i<2*M_PI;i+=M_PI/6.0f){
+        float s = 300.0f;
+        Line aline(Point(glm::vec2(0.0f,0.0f)),Point(glm::vec2(s*cos(i),s*sin(i))));
         lines.add(aline);
     }
-    lines.print();
     lines.sort();
-    lines.print();
-    return 1;
 
 
     //init random numbers
@@ -232,9 +231,9 @@ int main(int argc, char** argv){
 
         // set transforms
         // Model matrices
-        //model = glm::rotate(glm::mat4(1.0f),(float)glfwGetTime(),glm::vec3(0.0f,0.0f,1.0f));
+        model = glm::rotate(glm::mat4(1.0f),(float)glfwGetTime(),glm::vec3(0.0f,0.0f,1.0f));
         //cout << glfwGetTime() << "\n";
-        model = glm::mat4(1.0f);
+        //model = glm::mat4(1.0f);
         // view matrix
         glm::mat4 view = glm::mat4(1.0f);
         
@@ -265,8 +264,9 @@ int main(int argc, char** argv){
         //glDrawArrays(GL_POINTS,0,numPoints);
         //glDrawArrays(GL_TRIANGLES,0,3);
         
-        line1.draw(VAO,VBO,shader);
-        line2.draw(VAO,VBO,shader);
+        //line1.draw(VAO,VBO,shader);
+        //line2.draw(VAO,VBO,shader);
+        lines.draw(VAO,VBO,shader);
 
         mainWindow.render();
 
