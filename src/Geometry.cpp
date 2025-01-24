@@ -345,14 +345,6 @@ std::vector<Line> LineVec::sort(std::vector<Line> _lines){
     std::vector<Line> lVec(first,mid);
     std::vector<Line> rVec(mid,end);
 
-    std::cout << "-------LVEC-------\n";
-    for(size_t i=0;i<lVec.size();i++){
-        lVec[i].print();
-    }
-    std::cout << "-------RVEC-------\n";
-    for(size_t i=0;i<rVec.size();i++){
-        rVec[i].print();
-    }
 
     lVec = sort(lVec);
     rVec = sort(rVec);
@@ -366,7 +358,7 @@ std::vector<Line> LineVec::sort(std::vector<Line> _lines){
             newVec.push_back(lVec[i]);
             i++;
         }else{
-            newVec.push_back(lVec[j]);
+            newVec.push_back(rVec[j]);
             j++;
         }
     }
@@ -376,18 +368,16 @@ std::vector<Line> LineVec::sort(std::vector<Line> _lines){
     for(size_t jj=j;jj<rVec.size();jj++){
         newVec.push_back(rVec[jj]);
     }
-    std::cout << "-------NEWVEC-------\n";
-    for(size_t i=0;i<rVec.size();i++){
-        newVec[i].print();
-    }
     
 
     return newVec;
 
 }
 std::vector<Line> LineVec::sort(){
-    if(isSorted()) return lines;
-    else return sort(lines);
+    if(!isSorted()){
+        lines =  sort(lines);
+    }
+    return lines;
 }
 void LineVec::draw(unsigned int& VAO, unsigned int& VBO, Shader& shader){
     for(size_t i=0;i<size();i++){

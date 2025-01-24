@@ -66,7 +66,7 @@ int main(int argc, char** argv){
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
     LineVec lines;
-    for(int i=0;i<3;i++){
+    for(int i=0;i<2;i++){
         Line aline(Point(glm::vec2(0.0f,0.0f)),Point(glm::vec2((float)(10-i),0.0f)));
         lines.add(aline);
     }
