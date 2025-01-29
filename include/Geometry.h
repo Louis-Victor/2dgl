@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Shader.h"
+#include "Window.h"
 
 class Point{
     private:
@@ -75,6 +76,7 @@ class LineVec{
         std::vector<Line> lines;
         bool isSorted(std::vector<Line> _lines);
         std::vector<Line> sort(std::vector<Line> _lines);
+        float* data;
     public:
         LineVec();
         LineVec(const Line& line);
@@ -87,10 +89,36 @@ class LineVec{
         Line pop(int index);
         bool isSorted();
         std::vector<Line> sort();
+        void bind(unsigned int& VAO, unsigned int& VBO);
         void draw(unsigned int& VAO, unsigned int& VBO,Shader& shader);
         //std::vector<Point> getCenters();
         //std::string toString();
         void print();
 };
+
+// Simple graphis drawings SGD
+namespace sgd{
+    glm::vec4 _color;
+    unsigned int _VAO, _VBO;
+     const unsigned int shaderCount = 2;
+    const char* shaderList[shaderCount] = {
+        "main.vert",
+        "main.frag"
+    };
+    Shader _shader(shaderList, shaderCount);
+    Window window;
+
+    void init();
+    void setColor(float col);
+    void setColor(float col, float a);
+    void setColor(float r, float g, float b);
+    void setColor(float r, float g, float b, float a);
+
+    void  drawPoint(float x, float y);
+    void  drawLine(float x1, float y1, float x2, float y2);
+}
+
+
+
 
 #endif

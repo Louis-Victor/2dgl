@@ -11,9 +11,7 @@
 // GLFW & GLEW include
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-//#include </usr/include/GLFW/glfw3.h>
-//#include <GLES2/gl2.h>
-//#include <EGL/egl.h>
+
 // OpenGL Mathematics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -42,29 +40,7 @@ int main(int argc, char** argv){
 
     glfwTerminate();
 
-    // Starts glfw
-    if(setUpGL()){
-        cout << "INIT SUCCESSFUL\n"; 
-    }else{
-        cout << "FAILED INIT\n"; 
-        return 1;
-    }
-
-    // Create Window object
-    // 1920x1080
-    Window mainWindow(800*screen,800,"mainWindow");
-    cout << mainWindow.getWidth() << "x" << mainWindow.getHeight() << "\n";
-    if(mainWindow.getWindow() == NULL){
-        glfwTerminate();
-        return 1;
-    }
-
-    // Initiate GLEW
-    if (glewInit() != GLEW_OK) {
-        cerr << "Failed to initialize GLEW\n";
-        return 1;
-    }
-    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    sgd::init();
 
     LineVec lines;
     for(float i=0;i<2*M_PI;i+=M_PI/6.0f){
@@ -215,14 +191,14 @@ int main(int argc, char** argv){
         }
 
         // camera rotation
-        /*
-        camera.processMouseMovement(xoffset,yoffset);
+        
+        /*camera.processMouseMovement(xoffset,yoffset);
 
         if(xoffset == xlastOff) xoffset = 0;
         if(yoffset == ylastOff) yoffset = 0;
         xlastOff  = xoffset;
-        ylastOff  = yoffset;
-        */
+        ylastOff  = yoffset;*/
+        
 
         mainWindow.clear(0.2f,0.3f,0.3f);
 
@@ -232,7 +208,6 @@ int main(int argc, char** argv){
         // set transforms
         // Model matrices
         model = glm::rotate(glm::mat4(1.0f),(float)glfwGetTime(),glm::vec3(0.0f,0.0f,1.0f));
-        //cout << glfwGetTime() << "\n";
         //model = glm::mat4(1.0f);
         // view matrix
         glm::mat4 view = glm::mat4(1.0f);
@@ -244,29 +219,9 @@ int main(int argc, char** argv){
         glUniformMatrix4fv(modelLoc,1,GL_FALSE,glm::value_ptr(model));
         glUniformMatrix4fv(viewLoc,1,GL_FALSE,glm::value_ptr(view));
         glUniformMatrix4fv(projectionLoc,1,GL_FALSE,glm::value_ptr(projection));
-
-
-        /*cout << "POINT TRANSFORMATIONS\n";
-        for(int i=0;i<numPoints;i++){
-            glm::vec4 avec = glm::vec4(points[i*6],points[i*6+1],0.0f,0.0f);
-            cout << "\t(" << avec.x << ", " << avec.y << ", " << avec.z << ")\n";
-            avec = projection * view * model * avec;
-            cout << "\t(" << avec.x << ", " << avec.y << ", " << avec.z << ")\n";
-            
-        }*/
-
-
-        // draw stuff
-        //glBindVertexArray(VAO);
-        //glLineWidth(5.0f);
-        //glDrawArrays(GL_LINE_STRIP,0,numPoints);
-        //glDrawArrays(GL_LINES,0,numPoints);
-        //glDrawArrays(GL_POINTS,0,numPoints);
-        //glDrawArrays(GL_TRIANGLES,0,3);
         
-        //line1.draw(VAO,VBO,shader);
-        //line2.draw(VAO,VBO,shader);
-        lines.draw(VAO,VBO,shader);
+        
+        //lines.draw(VAO,VBO,shader);
 
         mainWindow.render();
 

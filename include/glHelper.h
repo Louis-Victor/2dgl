@@ -3,11 +3,16 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <string>
+
+#include "Shader.h"
+
 //#include <GLES2/gl2.h>
 //#include <EGL/egl.h>
 
 extern float xoffset;
 extern float yoffset;
+
+extern Shader shader;
 
 // print file and line number
 void  pLine(const std::string f, const int l);

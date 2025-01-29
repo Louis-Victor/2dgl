@@ -6,6 +6,8 @@
 #include <fstream>
 #include <cstring>
 
+#include "Shader.h"
+
 char shaderDir[] = "shaders/";
 
 float xoffset = 0.0f;
@@ -21,6 +23,7 @@ bool firstMove = true;
 void pLine(const std::string  f, const int l){
     std::cout << f << "::" << l << "\n";
 }
+
 
 // Window resize function
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){

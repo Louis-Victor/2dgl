@@ -6,10 +6,12 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 #include "Geometry.h"
 #include "Shader.h"
 #include  "glHelper.h"
+#include "Window.h"
 
 // POINT
 Point::Point():
@@ -172,6 +174,7 @@ float* Point::getData(){
     data[4] = g;
     data[5] = b;
     data[6] = a;
+
 
     return data;
 }
@@ -389,4 +392,36 @@ void LineVec::print(){
         std::cout << "------ Line " << i << " -------\n";
         lines[i].print();
     }
+}
+
+// Simple graphics drawings SGD
+
+void sgd::init(){
+    sgd::_color = glm::vec4(1.0f,1.0f,1.0f,1.0f);
+    // Starts glfw
+    if(setUpGL()){
+        std::cout << "INIT SUCCESSFUL\n";
+    }else{
+        std::cout << "FAILED INIT\n";
+        exit(1);
+    }
+    // Create Window object
+    // 1920x1080
+    window  = Window(800,800,"mainWindow");
+    std::cout << window.getWidth() << "x" << window.getHeight() << "\n";
+    if(window.getWindow() == NULL){
+        glfwTerminate();
+        exit(1);
+    }
+    // Initiate GLEW
+    if (glewInit() != GLEW_OK) {
+        std::cerr << "Failed to initialize GLEW\n";
+        exit(1);
+    }
+    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
+    // set up vao & vbo
+    glGenVertexArrays(1,&_VAO);
+    glGenBuffers(1,&_VBO);
+    
 }
